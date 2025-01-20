@@ -27,7 +27,7 @@ public:
       cout << "|";
       for (int j = 0; j < size; j++) {
         if (board[i][j] == nullptr) {
-          cout << "    "
+          cout << "   "
                << "|";
         } else {
           cout << board[i][j]->getType() << "  |";
@@ -36,7 +36,7 @@ public:
       cout << endl;
     }
   }
-  PlayingPiece getPiece(int row, int col) { return *board[row][col]; }
+  PlayingPiece* getPiece(int row, int col) { return board[row][col]; }
   bool setPiece(int row, int col, PlayingPiece *piece) {
     if (board[row][col] == nullptr) {
       board[row][col] = piece;
