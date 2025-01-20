@@ -78,53 +78,45 @@ public:
 
   bool winnerCheck(int row, int col, PlayingPiece *piece) {
 
-    int count = 0;
+    bool rowCheck = true;
+    bool colCheck = true;
+    bool diagCheck = true;
+    bool antiDiagCheck = true;
     int size = gameBoard->getSize();
     // check for the row
     for (int i = 0; i < size; i++) {
-      if (gameBoard->getPiece(row, i) != nullptr &&
-          gameBoard->getPiece(row, i)->getType() == piece->getType()) {
-        // cout << "Hello";
-        count++;
+      if (gameBoard->getPiece(row, i) == nullptr ||
+          gameBoard->getPiece(row, i)->getType() != piece->getType()) {
+        rowCheck = false;
       }
     }
-    if (count == size) {
-      return true;
-    }
+
     // check for the column
-    count = 0;
     for (int i = 0; i < size; i++) {
-      if (gameBoard->getPiece(i, col) != nullptr &&
+      if (gameBoard->getPiece(i, col) != nullptr ||
           gameBoard->getPiece(i, col)->getType() == piece->getType()) {
-        count++;
+        colCheck = false;
       }
-    }
-    if (count == size) {
-      return true;
-    }
-    // check for the diagonal
-    count = 0;
-    for (int i = 0; i < size; i++) {
-      if (gameBoard->getPiece(i, i) != nullptr &&
-          gameBoard->getPiece(i, i)->getType() == piece->getType()) {
-        count++;
-      }
-    }
-    if (count == size) {
-      return true;
     }
 
     // check for the diagonal
-    count = 0;
     for (int i = 0; i < size; i++) {
-      if (gameBoard->getPiece(i, size - 1 - i) != nullptr &&
-          gameBoard->getPiece(i, size - 1 - i)->getType() == piece->getType()) {
+      if (gameBoard->getPiece(i, i) == nullptr ||
+          gameBoard->getPiece(i, i)->getType() != piece->getType()) {
+        diagCheck = false;
       }
     }
-    if (count == size) {
-      return true;
+
+    // check for the diagonal
+
+    for (int i = 0; i < size; i++) {
+      if (gameBoard->getPiece(i, size - 1 - i) == nullptr ||
+          gameBoard->getPiece(i, size - 1 - i)->getType() != piece->getType()) {
+        antiDiagCheck = false;
+      }
     }
-    return false;
+
+    return rowCheck || colCheck || diagCheck || antiDiagCheck;
   }
 };
 
